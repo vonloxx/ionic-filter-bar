@@ -440,10 +440,15 @@ angular.module('jett.ionic.filter.bar', ['ionic']);
             favoritesTitle: 'Favorite Searches',
             favoritesAddPlaceholder: 'Add a search term',
             favoritesEnabled: false,
-            favoritesKey: 'ionic_filter_bar_favorites'
+            favoritesKey: 'ionic_filter_bar_favorites',
+            filterTextChanged: angular.noop,
+            initialFilterText: ''
+
           }, opts);
 
-          scope.data = {filterText: ''};
+          scope.data = {
+            filterText: scope.initialFilterText
+          };
 
           //if no custom theme was configured, get theme of containers bar-header
           if (!scope.config.theme) {
@@ -534,6 +539,7 @@ angular.module('jett.ionic.filter.bar', ['ionic']);
           // Filtered items will be sent to update
           scope.filterItems = function(filterText) {
             var filterExp, filteredItems;
+            scope.filterTextChanged(filterText);
 
             // pass back original list if filterText is empty.
             // Otherwise filter by expression, supplied properties, or filterText.
